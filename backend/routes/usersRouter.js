@@ -4,6 +4,7 @@ const {
   getNowUser,
   getUser,
   editUser,
+  getPostsByUser,
 } = require('../controllers/usersController');
 
 const router = require('express').Router();

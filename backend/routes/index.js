@@ -3,9 +3,11 @@ const { celebrate, Joi } = require('celebrate');
 const { signIn, signUp } = require('../controllers/authController');
 const NotFoundError = require('../errors/NotFoundErrors');
 const authMiddleware = require('../middlewares/authMiddleware');
+const { postsRouter } = require('./postsRouter');
 const { usersRouter } = require('./usersRouter');
 
 router.use('/users', authMiddleware, usersRouter);
+router.use('/posts', authMiddleware, postsRouter);
 router.post(
   '/signin',
   celebrate({
@@ -28,7 +30,7 @@ router.post(
   }),
   signUp,
 );
-router.get('*', () => {
+router.use('*', () => {
   throw new NotFoundError('Такого роута не существует');
 });
 
