@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { default: isEmail } = require('validator/lib/isEmail');
+const { default: isURL } = require('validator/lib/isURL');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -8,13 +9,14 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (v) => isEmail(v),
-      message: () => 'Неправильной формат почты',
+      message: () => 'Неправильный формат почты',
     },
   },
   password: {
     type: String,
     required: true,
     select: false,
+    minLength: 6,
   },
   name: {
     type: String,
@@ -24,11 +26,13 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: '../assets/images/defaultUser.jpg',
+    default:
+      'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg',
   },
   description: {
     type: String,
     default: 'Пока описания нет',
+    minLength: 2,
   },
 });
 

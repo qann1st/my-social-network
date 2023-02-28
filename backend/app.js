@@ -8,6 +8,7 @@ const {
   errorLogger,
 } = require('./middlewares/loggerMiddleware');
 const { error } = require('./middlewares/errorMiddleware');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const start = async (req, res, next) => {
@@ -20,6 +21,7 @@ const start = async (req, res, next) => {
     app.use(express.json());
     app.use(helmet());
     app.use(cors());
+    app.use(cookieParser());
 
     app.use('/', router);
     app.use(errorLogger);
