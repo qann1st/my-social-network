@@ -33,7 +33,7 @@ module.exports.getPostsByUser = async (req, res, next) => {
     if (post === null) {
       throw new NotFoundError('Пользователь не найден');
     }
-    res.send(post);
+    res.send(post.reverse());
   } catch (err) {
     next(err);
   }
