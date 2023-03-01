@@ -20,6 +20,7 @@ router.get(
   }),
   getUser,
 );
+router.get('/posts/:id', getPostsByUser);
 router.patch(
   '/me',
   celebrate({

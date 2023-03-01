@@ -15,7 +15,7 @@ router.post(
   celebrate({
     body: Joi.object().keys({
       image: Joi.string().uri(),
-      description: Joi.string().min(2),
+      description: Joi.string().min(2).required(),
     }),
   }),
   createPost,

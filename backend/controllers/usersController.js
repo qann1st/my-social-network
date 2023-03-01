@@ -1,5 +1,6 @@
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundErrors');
+const postSchema = require('../models/postSchema');
 const userSchema = require('../models/userSchema');
 
 module.exports.getUsers = async (req, res, next) => {
@@ -19,6 +20,20 @@ module.exports.getUser = async (req, res, next) => {
       throw new NotFoundError('Пользователь не найден');
     }
     res.send(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.getPostsByUser = async (req, res, next) => {
+  try {
+    const post = await postSchema.find({
+      'owner.name': req.params.id,
+    });
+    if (post === null) {
+      throw new NotFoundError('Пользователь не найден');
+    }
+    res.send(post);
   } catch (err) {
     next(err);
   }
