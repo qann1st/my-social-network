@@ -15,6 +15,7 @@ interface PostProps {
 
 const Post: React.FC<PostProps> = ({ post, owner, setPosts }) => {
   const { data } = useAppSelector((state) => state.user);
+  const { darkMode } = useAppSelector((state) => state.theme);
 
   const isLiked = post.likes.some((i) => i._id === data._id);
 
@@ -42,18 +43,27 @@ const Post: React.FC<PostProps> = ({ post, owner, setPosts }) => {
         padding: '20px 16px',
         boxSizing: 'border-box',
         borderRadius: '15px',
-        backgroundColor: 'rgb(240, 240, 240)',
+        backgroundColor: darkMode ? 'rgb(30, 30, 30)' : 'rgb(220, 220, 220)',
       }}>
-      <Box sx={{ display: 'flex', gap: '15px', marginBottom: '10px' }}>
-        <Link to={`/profile/${owner._id}`}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '15px',
+          marginBottom: '10px',
+          transition: 'opacity 0.2s ease-in-out',
+          '&:hover': { opacity: 0.5 },
+        }}>
+        <Link style={{ maxHeight: '32px' }} to={`/profile/${owner._id}`}>
           <img
-            style={{ width: '32px', borderRadius: '50%' }}
+            style={{ maxWidth: '32px', width: '100%', maxHeight: '32px', borderRadius: '50%' }}
             src={owner.avatar}
             alt={`Аватар пользователя ${owner.name}`}
           />
         </Link>
         <Box>
-          <Typography>{owner.name}</Typography>
+          <Link style={{ textDecoration: 'none' }} to={`/profile/${owner._id}`}>
+            <Typography sx={{ color: darkMode ? 'white' : 'black' }}>{owner.name}</Typography>
+          </Link>
           <Typography variant="caption">{post.data}</Typography>
         </Box>
       </Box>

@@ -5,7 +5,7 @@ import { Button, Typography } from '@mui/material';
 import Post from '../components/app/Post';
 import { getPostsByUser, getUser, logout } from '../utils/Api';
 import Loader from '../components/Loader';
-import { useAppDispatch } from '../hooks/index';
+import { useAppDispatch, useAppSelector } from '../hooks/index';
 import { removeUser } from '../store/slices/userSlice';
 
 const Profile = () => {
@@ -16,6 +16,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
+  const { darkMode } = useAppSelector((state) => state.theme);
 
   React.useEffect(() => {
     getUser(params.id).then((user) => {
@@ -70,10 +71,15 @@ const Profile = () => {
 
   return (
     <Box>
-      <Box sx={{ padding: '60px 0 0', display: 'flex', justifyContent: 'center' }}>
+      <Box
+        sx={{
+          padding: '60px 0 0',
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
         <Box
           sx={{
-            backgroundColor: 'rgb(240, 240, 240)',
+            backgroundColor: darkMode ? 'rgb(30, 30, 30)' : 'rgb(220, 220, 220)',
             maxWidth: '900px',
             width: '100%',
             padding: '20px',
@@ -81,14 +87,24 @@ const Profile = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            flexDirection: { sm: 'row', xs: 'column' },
           }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: { sm: 'row', xs: 'column' },
+            }}>
             <img
               style={{ width: '150px', height: '150px', borderRadius: '50%' }}
               alt="Аватар пользователя"
               src={user?.avatar}
             />
-            <Box sx={{ marginLeft: '20px' }}>
+            <Box
+              sx={{
+                marginLeft: { sm: '20px', xs: '0' },
+                textAlign: { sm: 'left', xs: 'center' },
+              }}>
               <Typography fontSize={25}>{user?.name}</Typography>
               <Typography variant="caption">{user?.description}</Typography>
             </Box>
@@ -104,6 +120,7 @@ const Profile = () => {
           flexDirection: 'column',
           gap: '15px',
           paddingTop: '16px',
+          paddingBottom: '20px',
         }}>
         {userPosts.map((post) => (
           <Post key={post._id} post={post} setPosts={setUserPosts} owner={post.owner} />

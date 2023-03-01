@@ -52,9 +52,9 @@ export const deleteLike = (id: string) => {
     .catch((err) => err.data);
 };
 
-export const loginUser = (email: string, password: string) => {
+export const loginUser = (body: object) => {
   return instance
-    .post('signin', { email, password })
+    .post('signin', body)
     .then((res) => res.data)
     .catch((err) => err.data);
 };

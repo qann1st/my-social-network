@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPosts } from '../../utils/Api';
 import Post from './Post';
 import { Box } from '@mui/system';
 import { Pagination } from '@mui/material';

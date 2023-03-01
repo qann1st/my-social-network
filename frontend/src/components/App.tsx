@@ -40,12 +40,12 @@ const lightTheme = createTheme({
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(true);
-
-  const { isAuth } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
   const [posts, setPosts] = React.useState([]);
   const [pages, setPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
+  const dispatch = useAppDispatch();
+  const { isAuth } = useAppSelector((state) => state.user);
+  const { darkMode } = useAppSelector((state) => state.theme);
 
   React.useEffect(() => {
     getPosts(currentPage).then((data) => {
@@ -62,9 +62,9 @@ function App() {
     });
   }, []);
 
-  function handleLogin(e: any) {
+  function handleLogin(e: any, body: object) {
     e.preventDefault();
-    loginUser('qann1st@gmail.com', '123123gg').then((data) => {
+    loginUser(body).then(() => {
       handleCheck();
     });
   }
@@ -87,7 +87,7 @@ function App() {
 
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <CssBaseline />
         <Routes>
           <Route element={<PrivateOutlet isAuth={isAuth} />}>
