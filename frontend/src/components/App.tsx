@@ -9,6 +9,10 @@ import AuthOutlet from './AuthOutlet';
 import Layout from './layout/Layout';
 import PrivateOutlet from './PrivateOutlet';
 import Auth from '../pages/Auth';
+import { getNowUser, loginUser, getPosts } from '../utils/Api';
+import { useAppDispatch } from '../hooks/index';
+import { setUserInfo } from '../store/slices/userSlice';
+import Profile from '../pages/Profile';
 
 const darkTheme = createTheme({
   palette: {
@@ -32,7 +36,46 @@ const lightTheme = createTheme({
 });
 
 function App() {
+  const [isLoading, setIsLoading] = React.useState(true);
+
   const { isAuth } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const [posts, setPosts] = React.useState([]);
+  const [pages, setPages] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  React.useEffect(() => {
+    getPosts(currentPage).then((data) => {
+      setPages(data.pages);
+      setPosts(data.posts);
+    });
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    handleCheck().finally(() => {
+      setIsLoading(false);
+    });
+  }, []);
+
+  function handleLogin(e: any) {
+    e.preventDefault();
+    loginUser('qann1st@gmail.com', '123123gg').then((data) => {
+      handleCheck();
+    });
+  }
+
+  function handleCheck() {
+    return getNowUser().then((data) => {
+      dispatch(setUserInfo(data));
+    });
+  }
+
+  if (isLoading) {
+    return <h1>Загрузка</h1>;
+  }
 
   return (
     <>
@@ -40,14 +83,23 @@ function App() {
         <Routes>
           <Route element={<PrivateOutlet isAuth={isAuth} />}>
             <Route element={<Layout />}>
-              <Route path="/" element={<MainPage />}></Route>
+              <Route
+                path="/"
+                element={
+                  <MainPage
+                    posts={posts}
+                    setPosts={setPosts}
+                    pages={pages}
+                    setCurrentPage={setCurrentPage}
+                  />
+                }></Route>
+              <Route path="/profile/:id" element={<Profile />}></Route>
             </Route>
           </Route>
           <Route element={<AuthOutlet isAuth={isAuth} />}>
-            <Route path="/signin" element={<Auth />}></Route>
+            <Route path="/signin" element={<Auth onLogin={handleLogin} />}></Route>
             <Route path="/signup" element={<Register />}></Route>
           </Route>
-          <Route path="*" element={<h1>404</h1>}></Route>
         </Routes>
       </ThemeProvider>
       <ImagePopup />

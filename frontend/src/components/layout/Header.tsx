@@ -1,10 +1,13 @@
 import React from 'react';
-import { AppBar, IconButton, Container, Input, Avatar } from '@mui/material';
+import { AppBar, IconButton, Container, Input } from '@mui/material';
 import logo from '../../assets/logo.png';
 import { Box } from '@mui/system';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 
 const Header = () => {
+  const { data } = useAppSelector((state) => state.user);
+
   return (
     <AppBar
       sx={{
@@ -26,11 +29,13 @@ const Header = () => {
           </IconButton>
         </Box>
         <Input placeholder="Поиск по пользователям" sx={{ margin: 'auto', fontWeight: '200' }} />
-        <Box component="nav">
-          <Link to="/profile">
-            <Avatar />
-          </Link>
-        </Box>
+        <Link to={`profile/${data._id}`} style={{ height: '32px' }}>
+          <img
+            style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+            alt="Аватар пользователя"
+            src={data?.avatar}
+          />
+        </Link>
       </Container>
     </AppBar>
   );
