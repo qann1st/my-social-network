@@ -1,5 +1,5 @@
 import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Route, Routes } from 'react-router';
 import { useAppSelector } from '../hooks';
 import MainPage from '../pages/MainPage';
@@ -13,6 +13,9 @@ import { getNowUser, loginUser, getPosts } from '../utils/Api';
 import { useAppDispatch } from '../hooks/index';
 import { setUserInfo } from '../store/slices/userSlice';
 import Profile from '../pages/Profile';
+import Loader from './Loader';
+import { Box } from '@mui/system';
+import { Link } from 'react-router-dom';
 
 const darkTheme = createTheme({
   palette: {
@@ -40,7 +43,6 @@ function App() {
 
   const { isAuth } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-
   const [posts, setPosts] = React.useState([]);
   const [pages, setPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -69,17 +71,24 @@ function App() {
 
   function handleCheck() {
     return getNowUser().then((data) => {
-      dispatch(setUserInfo(data));
+      if (data !== undefined) {
+        dispatch(setUserInfo(data));
+      }
     });
   }
 
   if (isLoading) {
-    return <h1>Загрузка</h1>;
+    return (
+      <Box sx={{ height: '100vh' }}>
+        <Loader />
+      </Box>
+    );
   }
 
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <Routes>
           <Route element={<PrivateOutlet isAuth={isAuth} />}>
             <Route element={<Layout />}>
@@ -100,6 +109,23 @@ function App() {
             <Route path="/signin" element={<Auth onLogin={handleLogin} />}></Route>
             <Route path="/signup" element={<Register />}></Route>
           </Route>
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  width: '100%',
+                  height: '100vh',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <h1 style={{ fontSize: '100px', margin: 0 }}>404</h1>
+                <p>Страница не найдена</p>
+                <Link to="/">Назад</Link>
+              </div>
+            }></Route>
         </Routes>
       </ThemeProvider>
       <ImagePopup />

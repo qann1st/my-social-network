@@ -65,3 +65,10 @@ export const getNowUser = () => {
     .then((res) => res.data)
     .catch((err) => err.data);
 };
+
+export const logout = () => {
+  return instance
+    .post('logout')
+    .then((res) => res.data)
+    .catch((err) => err.data);
+};
