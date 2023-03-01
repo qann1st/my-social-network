@@ -11,6 +11,19 @@ const { error } = require('./middlewares/errorMiddleware');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
+const allowDomains = ['http://localhost:5173'];
+const corsOptions = {
+  origin(origin, callback) {
+    if (allowDomains.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Ваш домен не находится в списке разрешенных'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  credentials: true,
+};
+
 const start = async (req, res, next) => {
   try {
     mongoose.set('strictQuery', false);
@@ -20,7 +33,7 @@ const start = async (req, res, next) => {
     app.use(requestLogger);
     app.use(express.json());
     app.use(helmet());
-    app.use(cors());
+    app.use(cors(corsOptions));
     app.use(cookieParser());
 
     app.use('/', router);

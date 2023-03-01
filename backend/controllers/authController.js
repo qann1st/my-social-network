@@ -26,6 +26,7 @@ module.exports.signIn = async (req, res, next) => {
     res.cookie('token', token, {
       maxAge: 604800000,
       httpOnly: true,
+      secure: true,
       sameSite: 'none',
     });
     res.send({ token });

@@ -16,7 +16,7 @@ module.exports.getPosts = async (req, res, next) => {
 module.exports.createPost = async (req, res, next) => {
   try {
     const owner = await userSchema.findById(req.user._id);
-    req.body.owner = { name: owner.name, avatar: owner.avatar };
+    req.body.owner = { name: owner.name, avatar: owner.avatar, _id: owner._id };
     const post = await postSchema.create(req.body);
     res.status(201).send(post);
   } catch (err) {

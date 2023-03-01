@@ -6,8 +6,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const { postsRouter } = require('./postsRouter');
 const { usersRouter } = require('./usersRouter');
 
-router.use('/users', authMiddleware, usersRouter);
-router.use('/posts', authMiddleware, postsRouter);
+router.use('/users', usersRouter);
+router.use('/posts', postsRouter);
 router.post(
   '/signin',
   celebrate({
