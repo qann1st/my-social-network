@@ -113,7 +113,7 @@ const Profile = () => {
           <Button onClick={handleLogout}>Выйти</Button>
         </Box>
       </Box>
-      {user.posts.length === 0 ? (
+      {userPosts.length === 0 ? (
         'Пока постов нет'
       ) : (
         <Box
