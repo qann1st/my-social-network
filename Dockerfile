@@ -6,7 +6,7 @@ RUN cd frontend && npm install && npm run build
 FROM node:16 as backend-build
 WORKDIR /usr/src
 COPY backend/ ./backend/
-RUN cd backend && npm install && NODE_ENV=production npm run build
+RUN cd backend && npm install
 RUN ls
 
 FROM node:16 as ama-full
