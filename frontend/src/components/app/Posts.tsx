@@ -15,7 +15,7 @@ const Posts: React.FC<PostsProps> = ({ posts, setPosts, pages, setCurrentPage })
   return (
     <>
       {posts.length === 0 ? (
-        <Box sx={{ height: '80vh' }}>
+        <Box sx={{ height: '70vh' }}>
           <Loader />
         </Box>
       ) : (
