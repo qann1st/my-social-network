@@ -13,6 +13,7 @@ const Profile = () => {
   const [user, setUser]: any = React.useState([]);
   const [error, setError] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [isPostsLoading, setIsPostsLoading] = React.useState(true);
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -112,20 +113,28 @@ const Profile = () => {
           <Button onClick={handleLogout}>Выйти</Button>
         </Box>
       </Box>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: '15px',
-          paddingTop: '16px',
-          paddingBottom: '20px',
-        }}>
-        {userPosts.map((post: any) => (
-          <Post key={post._id} post={post} setPosts={setUserPosts} owner={post.owner} />
-        ))}
-      </Box>
+      {isPostsLoading ? (
+        <Box sx={{ height: '70vh' }}>
+          <Loader />
+        </Box>
+      ) : user.posts.length === 0 ? (
+        'Пока постов нет'
+      ) : (
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '15px',
+            paddingTop: '16px',
+            paddingBottom: '20px',
+          }}>
+          {userPosts.map((post: any) => (
+            <Post key={post._id} post={post} setPosts={setUserPosts} owner={post.owner} />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
