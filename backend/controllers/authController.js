@@ -60,6 +60,7 @@ module.exports.logout = async (req, res, next) => {
 module.exports.signUp = async (req, res, next) => {
   try {
     let { email, password, name } = req.body;
+    const pass = req.body.password;
     email.toLowerCase();
 
     const user = await userSchema.findOne({ email });

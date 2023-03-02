@@ -89,7 +89,12 @@ module.exports.addComment = async (req, res, next) => {
         req.params.id,
         {
           $addToSet: {
-            comments: { name: user.name, avatar: user.avatar, text },
+            comments: {
+              name: user.name,
+              _id: user._id,
+              avatar: user.avatar,
+              text,
+            },
           },
         },
         { new: true, runValidators: true },
