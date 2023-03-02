@@ -2,6 +2,7 @@ import React from 'react';
 import Post from './Post';
 import { Box } from '@mui/system';
 import { Pagination } from '@mui/material';
+import Loader from '../Loader';
 
 interface PostsProps {
   posts: Array<1>;
@@ -14,7 +15,9 @@ const Posts: React.FC<PostsProps> = ({ posts, setPosts, pages, setCurrentPage })
   return (
     <>
       {posts.length === 0 ? (
-        'Пока постов нет'
+        <Box sx={{ height: '80vh' }}>
+          <Loader />
+        </Box>
       ) : (
         <>
           <Box
