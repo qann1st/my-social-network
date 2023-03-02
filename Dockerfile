@@ -11,7 +11,7 @@ RUN ls
 
 FROM node:16 as ama-full
 WORKDIR /root/
-COPY --from=frontend-build /usr/src/frontend/build ./frontend
+COPY --from=frontend-build /usr/src/frontend/dist ./frontend
 COPY --from=backend-build /usr/src/backend .
 RUN ls
 EXPOSE 80
