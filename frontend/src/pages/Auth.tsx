@@ -7,10 +7,10 @@ import { Box } from '@mui/system';
 import { Button, Input, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const Auth = ({ onLogin }) => {
+const Auth = ({ onLogin }: { onLogin: any }) => {
   const { darkMode } = useAppSelector((state) => state.theme);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const emailRef: any = useRef(null);
+  const passwordRef: any = useRef(null);
 
   return (
     <Box

@@ -9,7 +9,7 @@ import { DarkMode, LightMode } from '@mui/icons-material';
 import { setTheme } from '../../store/slices/themeSlice';
 
 const Header = () => {
-  const { data } = useAppSelector((state) => state.user);
+  const { data }: any = useAppSelector((state) => state.user);
   const { darkMode } = useAppSelector((state) => state.theme);
   const dispatch = useAppDispatch();
 

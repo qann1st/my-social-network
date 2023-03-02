@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/index';
 
-const Comment = ({ comment }: { comment: object }) => {
+const Comment = ({ comment }: { comment: any }) => {
   const { darkMode } = useAppSelector((state) => state.theme);
 
   return (

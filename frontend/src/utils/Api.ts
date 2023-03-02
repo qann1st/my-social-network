@@ -76,7 +76,7 @@ export const logout = () => {
     .catch((err) => err.data);
 };
 
-export const addComment = (id: string, text) => {
+export const addComment = (id: string, text: string) => {
   return instance
     .put(`posts/${id}/comment`, { text })
     .then((res) => res.data)

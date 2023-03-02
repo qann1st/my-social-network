@@ -9,8 +9,8 @@ interface NewpostProps {
 }
 
 const NewPost: React.FC<NewpostProps> = ({ posts, setPosts }) => {
-  const descriptionRef = useRef(null);
-  const imageRef = useRef(null);
+  const descriptionRef: any = useRef(null);
+  const imageRef: any = useRef(null);
 
   function handleSubmit(e: any) {
     e.preventDefault();

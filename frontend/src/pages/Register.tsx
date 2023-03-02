@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 
 const Register = ({ onRegister }: { onRegister: any }) => {
   const { darkMode } = useAppSelector((state) => state.theme);
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const nameRef: any = useRef(null);
+  const emailRef: any = useRef(null);
+  const passwordRef: any = useRef(null);
 
   return (
     <Box
@@ -36,9 +36,9 @@ const Register = ({ onRegister }: { onRegister: any }) => {
         component="form"
         onSubmit={(e) =>
           onRegister(e, {
-            name: nameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
+            name: nameRef.current?.value,
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
           })
         }>
         <Typography>Регистрация</Typography>

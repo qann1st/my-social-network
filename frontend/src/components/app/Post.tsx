@@ -9,17 +9,17 @@ import { addComment, addLike, deleteLike } from '../../utils/Api';
 import Comment from './Comment';
 
 interface PostProps {
-  post: object;
-  owner: object;
+  post: any;
+  owner: any;
   setPosts: any;
 }
 
 const Post: React.FC<PostProps> = ({ post, owner, setPosts }) => {
-  const { data } = useAppSelector((state) => state.user);
+  const { data }: any = useAppSelector((state) => state.user);
   const { darkMode } = useAppSelector((state) => state.theme);
-  const commentRef = useRef(null);
-  const isLiked = post.likes.some((i) => i._id === data._id);
-  const [comments, setComments] = React.useState([]);
+  const commentRef: any = useRef(null);
+  const isLiked = post.likes.some((i: any) => i._id === data._id);
+  const [comments, setComments]: any = React.useState([]);
   const [amount, setAmount] = React.useState(3);
   const part = comments.slice(0, amount);
 
@@ -29,21 +29,21 @@ const Post: React.FC<PostProps> = ({ post, owner, setPosts }) => {
     setComments(post.comments);
   }, []);
 
-  function handleLike(e) {
+  function handleLike(e: any) {
     e.preventDefault();
     addLike(post._id).then((data) =>
-      setPosts((state) => state.map((c) => (c._id === post._id ? data : c))),
+      setPosts((state: any) => state.map((c: any) => (c._id === post._id ? data : c))),
     );
   }
 
-  function handleDislike(e) {
+  function handleDislike(e: any) {
     e.preventDefault();
     deleteLike(post._id).then((data) =>
-      setPosts((state) => state.map((c) => (c._id === post._id ? data : c))),
+      setPosts((state: any) => state.map((c: any) => (c._id === post._id ? data : c))),
     );
   }
 
-  function handleAddComment(e) {
+  function handleAddComment(e: any) {
     e.preventDefault();
     addComment(post._id, commentRef.current.value).then((data) =>
       setComments([data.comments[data.comments.length - 1], ...comments]),
@@ -144,7 +144,7 @@ const Post: React.FC<PostProps> = ({ post, owner, setPosts }) => {
         }}>
         <Typography variant="caption">Количество комментариев: {comments.length}</Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', margin: '10px 0' }}>
-          {part.map((comment, i) => (
+          {part.map((comment: any, i: number) => (
             <Comment key={i} comment={comment} />
           ))}
           {amount >= comments.length ? null : (

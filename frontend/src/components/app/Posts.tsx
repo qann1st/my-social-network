@@ -25,7 +25,7 @@ const Posts: React.FC<PostsProps> = ({ posts, setPosts, pages, setCurrentPage })
               maxWidth: '532px',
               width: '100%',
             }}>
-            {posts.map((post) => (
+            {posts.map((post: any) => (
               <Post key={post._id} post={post} owner={post.owner} setPosts={setPosts} />
             ))}
           </Box>

@@ -10,7 +10,7 @@ import { removeUser } from '../store/slices/userSlice';
 
 const Profile = () => {
   const [userPosts, setUserPosts] = React.useState([]);
-  const [user, setUser] = React.useState([]);
+  const [user, setUser]: any = React.useState([]);
   const [error, setError] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const navigate = useNavigate();
@@ -122,7 +122,7 @@ const Profile = () => {
           paddingTop: '16px',
           paddingBottom: '20px',
         }}>
-        {userPosts.map((post) => (
+        {userPosts.map((post: any) => (
           <Post key={post._id} post={post} setPosts={setUserPosts} owner={post.owner} />
         ))}
       </Box>

@@ -67,10 +67,8 @@ function App() {
 
   function handleRegister(e: any, body: object) {
     e.preventDefault();
-    const { email, password } = body;
+    const { email, password }: any = body;
     register(body).then((data) => {
-      console.log(data);
-
       handleLogin(e, { email, password });
     });
   }
