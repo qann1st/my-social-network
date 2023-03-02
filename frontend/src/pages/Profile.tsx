@@ -112,24 +112,22 @@ const Profile = () => {
           <Button onClick={handleLogout}>Выйти</Button>
         </Box>
       </Box>
-      {userPosts.length === 0 ? (
-        'Пока постов нет'
-      ) : (
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            gap: '15px',
-            paddingTop: '16px',
-            paddingBottom: '20px',
-          }}>
-          {userPosts.map((post: any) => (
-            <Post key={post._id} post={post} setPosts={setUserPosts} owner={post.owner} />
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          gap: '15px',
+          paddingTop: '16px',
+          paddingBottom: '20px',
+        }}>
+        {userPosts.length === 0
+          ? 'Пока постов нет'
+          : userPosts.map((post: any) => (
+              <Post key={post._id} post={post} setPosts={setUserPosts} owner={post.owner} />
+            ))}
+      </Box>
     </Box>
   );
 };
