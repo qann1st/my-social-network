@@ -13,7 +13,6 @@ const Profile = () => {
   const [user, setUser]: any = React.useState([]);
   const [error, setError] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [isPostsLoading, setIsPostsLoading] = React.useState(true);
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -29,6 +28,7 @@ const Profile = () => {
   }, [params]);
 
   React.useEffect(() => {
+    setIsPostsLoading(true);
     getPostsByUser(user.name)
       .then((posts) => {
         setUserPosts(posts);
@@ -113,11 +113,7 @@ const Profile = () => {
           <Button onClick={handleLogout}>Выйти</Button>
         </Box>
       </Box>
-      {isPostsLoading ? (
-        <Box sx={{ height: '70vh' }}>
-          <Loader />
-        </Box>
-      ) : user.posts.length === 0 ? (
+      {user.posts.length === 0 ? (
         'Пока постов нет'
       ) : (
         <Box
