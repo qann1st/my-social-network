@@ -28,7 +28,6 @@ const Profile = () => {
   }, [params]);
 
   React.useEffect(() => {
-    setIsPostsLoading(true);
     getPostsByUser(user.name)
       .then((posts) => {
         setUserPosts(posts);
