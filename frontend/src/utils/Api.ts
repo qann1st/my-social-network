@@ -31,7 +31,10 @@ export const getPostsByUser = (id: string) => {
 
 export const addNewPost = (description: string, image: string) => {
   return image !== ''
-    ? instance.post(`posts`, { description, image })
+    ? instance
+        .post(`posts`, { description, image })
+        .then((res) => res.data)
+        .catch((err) => err.data)
     : instance
         .post(`posts`, { description })
         .then((res) => res.data)
@@ -69,6 +72,20 @@ export const getNowUser = () => {
 export const logout = () => {
   return instance
     .post('logout')
+    .then((res) => res.data)
+    .catch((err) => err.data);
+};
+
+export const addComment = (id: string, text) => {
+  return instance
+    .put(`posts/${id}/comment`, { text })
+    .then((res) => res.data)
+    .catch((err) => err.data);
+};
+
+export const register = (body: object) => {
+  return instance
+    .post('signup', body)
     .then((res) => res.data)
     .catch((err) => err.data);
 };

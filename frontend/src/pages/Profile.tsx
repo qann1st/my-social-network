@@ -25,7 +25,7 @@ const Profile = () => {
         setError(true);
       }
     });
-  }, []);
+  }, [params]);
 
   React.useEffect(() => {
     getPostsByUser(user.name)

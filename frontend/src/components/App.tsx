@@ -1,6 +1,6 @@
 import React from 'react';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { Route, Routes } from 'react-router';
+import { Route, Routes, useLocation } from 'react-router';
 import { useAppSelector } from '../hooks';
 import MainPage from '../pages/MainPage';
 import Register from '../pages/Register';
@@ -9,7 +9,7 @@ import AuthOutlet from './AuthOutlet';
 import Layout from './layout/Layout';
 import PrivateOutlet from './PrivateOutlet';
 import Auth from '../pages/Auth';
-import { getNowUser, loginUser, getPosts } from '../utils/Api';
+import { getNowUser, loginUser, getPosts, register } from '../utils/Api';
 import { useAppDispatch } from '../hooks/index';
 import { setUserInfo } from '../store/slices/userSlice';
 import Profile from '../pages/Profile';
@@ -46,14 +46,17 @@ function App() {
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector((state) => state.user);
   const { darkMode } = useAppSelector((state) => state.theme);
+  const location = useLocation();
 
   React.useEffect(() => {
-    getPosts(currentPage).then((data) => {
-      setPages(data.pages);
-      setPosts(data.posts);
-    });
+    if (isAuth) {
+      getPosts(currentPage).then((data) => {
+        setPages(data.pages);
+        setPosts(data.posts);
+      });
+    }
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [currentPage, isAuth, location]);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -61,6 +64,16 @@ function App() {
       setIsLoading(false);
     });
   }, []);
+
+  function handleRegister(e: any, body: object) {
+    e.preventDefault();
+    const { email, password } = body;
+    register(body).then((data) => {
+      console.log(data);
+
+      handleLogin(e, { email, password });
+    });
+  }
 
   function handleLogin(e: any, body: object) {
     e.preventDefault();
@@ -107,7 +120,7 @@ function App() {
           </Route>
           <Route element={<AuthOutlet isAuth={isAuth} />}>
             <Route path="/signin" element={<Auth onLogin={handleLogin} />}></Route>
-            <Route path="/signup" element={<Register />}></Route>
+            <Route path="/signup" element={<Register onRegister={handleRegister} />}></Route>
           </Route>
           <Route
             path="*"

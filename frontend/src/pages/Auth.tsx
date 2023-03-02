@@ -5,6 +5,7 @@ import { setUserInfo } from '../store/slices/userSlice';
 import { loginUser } from '../utils/Api';
 import { Box } from '@mui/system';
 import { Button, Input, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Auth = ({ onLogin }) => {
   const { darkMode } = useAppSelector((state) => state.theme);
@@ -28,8 +29,8 @@ const Auth = ({ onLogin }) => {
           alignItems: 'center',
           flexDirection: 'column',
           gap: '20px',
-          padding: '50px 20px',
-          maxWidth: '320px',
+          padding: '50px 20px 30px',
+          maxWidth: '400px',
           width: '100%',
           borderRadius: '15px',
           backgroundColor: darkMode ? 'rgb(30, 30, 30)' : 'rgb(220, 220, 220)',
@@ -44,12 +45,19 @@ const Auth = ({ onLogin }) => {
             display: 'flex',
             flexDirection: 'column',
             gap: '15px',
-            marginBottom: '100px',
+            marginBottom: '70px',
           }}>
           <Input placeholder="E-mail" type="email" inputRef={emailRef}></Input>
           <Input placeholder="Пароль" type="password" inputRef={passwordRef}></Input>
         </Box>
         <Button type="submit">Авторизоваться</Button>
+        <Box sx={{ transition: 'opacity 0.2s ease-in-out', '&:hover': { opacity: 0.5 } }}>
+          <Link
+            style={{ textDecoration: 'none', color: darkMode ? 'white' : 'black' }}
+            to="/signup">
+            Ещё не зарегистрированы? Войти
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
