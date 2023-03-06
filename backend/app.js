@@ -44,6 +44,7 @@ const start = async (req, res, next) => {
       console.log('Server started');
     });
   } catch (err) {
+console.log(err);
     next(err);
   }
 };
