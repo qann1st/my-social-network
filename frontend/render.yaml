@@ -1,9 +1,7 @@
 services:
   - name: web
-    env:
-      NODE_ENV: production
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    startCommand: /bin/sh -c "nginx -g 'daemon off;'"
     healthCheckPath: /
-    port: 3000
+    port: 80
 
