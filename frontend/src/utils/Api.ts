@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: 'https://social-network-backend-03wz.onrender.com/',
+  baseURL: 'https://my-social-network.onrender.com/signin/',
   headers: {
     'Access-Control': 'application/json',
   },
