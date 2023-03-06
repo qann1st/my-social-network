@@ -1,14 +1,16 @@
-FROM node:14
+FROM node:14-slim
 
 WORKDIR /app
 
-COPY package.json ./
-COPY yarn.lock ./
+COPY package*.json ./
 
-RUN yarn install
+RUN npm install --only=production
 
 COPY . .
 
-EXPOSE 3000
+ENV NODE_ENV=production
+ENV PORT=8080
 
-CMD [ "yarn", "dev" ]
+EXPOSE $PORT
+
+CMD ["npm", "run", "start"]
