@@ -11,7 +11,7 @@ const { error } = require('./middlewares/errorMiddleware');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-const allowDomains = ['http://localhost:3000, https://my-social-network.onrender.com'];
+const allowDomains = ['https://my-social-network.onrender.com, www.my-social-network.onrender.com, my-social-network.onrender.com'];
 const corsOptions = {
   origin(origin, callback) {
     if (allowDomains.indexOf(origin) !== -1) {
@@ -44,7 +44,6 @@ const start = async (req, res, next) => {
       console.log('Server started');
     });
   } catch (err) {
-console.log(err);
     next(err);
   }
 };
