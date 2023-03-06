@@ -11,7 +11,7 @@ const { error } = require('./middlewares/errorMiddleware');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-const allowDomains = ['http://localhost:5173'];
+const allowDomains = ['http://localhost:3000, https://my-social-network.onrender.com'];
 const corsOptions = {
   origin(origin, callback) {
     if (allowDomains.indexOf(origin) !== -1) {
@@ -27,7 +27,7 @@ const corsOptions = {
 const start = async (req, res, next) => {
   try {
     mongoose.set('strictQuery', false);
-    await mongoose.connect('mongodb://127.0.0.1:27017/socialnetwork');
+    await mongoose.connect(process.env.MONGODB_URL);
 
     const app = express();
     app.use(requestLogger);
@@ -40,7 +40,7 @@ const start = async (req, res, next) => {
     app.use(errorLogger);
     app.use(error);
 
-    app.listen('4000', () => {
+    app.listen(process.env.PORT, () => {
       console.log('Server started');
     });
   } catch (err) {
