@@ -2,5 +2,5 @@ services:
   - name: { my-social-network-frontend }
     env: production
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    startCommand: npm run preview
     healthCheckPath: /health-check
