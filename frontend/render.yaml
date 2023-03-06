@@ -1,6 +1,9 @@
 services:
-  - name: { my-social-network-frontend }
-    env: production
+  - name: web
+    env:
+      NODE_ENV: production
     buildCommand: npm install && npm run build
-    startCommand: npm run preview
-    healthCheckPath: /health-check
+    startCommand: npm start
+    healthCheckPath: /
+    port: 3000
+

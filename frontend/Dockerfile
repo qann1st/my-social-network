@@ -1,16 +1,16 @@
-FROM node:14-slim
+FROM node:14
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm install
 
 COPY . .
 
-ENV NODE_ENV=production
-ENV PORT=8080
+RUN npm run build
 
-EXPOSE $PORT
+EXPOSE 3000
 
-CMD ["npm", "run", "preview"]
+CMD [ "npm", "start" ]
+
